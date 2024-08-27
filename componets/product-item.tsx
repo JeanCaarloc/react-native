@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image, Text, Button } from "react-native";
+import { View, StyleSheet, Image, Text, Button, Linking } from "react-native";
 import { Product } from "../types/Product";
 
 type Props ={
@@ -6,6 +6,17 @@ type Props ={
 }
 
 export const ProductItem = (props: Props) =>{
+    const carrinho = () =>{
+        // alert("Você esta comprando: "props.product.name)
+        const url = 'https://web.whatsapp.com/';
+    //importar o linking e fazer ele abrir o link
+    Linking.openURL(url).catch(err =>{
+        console.error("Failed to open URL:", err);
+        alert("Não foi possivel abrir o link");
+        });
+    }
+
+
     return(
         <View style={styles.container}>
             <Image
@@ -16,7 +27,7 @@ export const ProductItem = (props: Props) =>{
             <View style={styles.info}>
                 <Text style={styles.name}>{props.product.name}</Text>
                 <Text style={styles.price}>R$ {props.product.price.toFixed(2)}</Text>
-                <Button title="Comprar" />
+                <Button title="Comprar" onPress={carrinho}/>
             </View>
         </View>
     );
@@ -33,8 +44,7 @@ const styles = StyleSheet.create({
     },
     info:{
         flex: 1,
-        marginLeft: 20,
-        backgroundColor: "rgb(128, 128, 128)"
+        marginLeft: 20   
     },
     name:{
         fontSize: 15,
